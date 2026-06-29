@@ -3,8 +3,8 @@
 Proyecto **full-stack** de la **Sesión 11 — Del Módulo a la App** (Taller de
 Construcción de Software Móvil, UNMSM), en dos capas independientes:
 
-- **`naturapp-backend/`** — API REST con **Express.js 5 + MongoDB (Mongoose)**.
-- **`naturapp-mobile/`** — App móvil con **React Native + Expo Router**.
+- **`backend/`** — API REST con **Express.js 5 + MongoDB (Mongoose)**.
+- **`mobile-client/`** — App móvil con **React Native + Expo Router**.
 
 La app permite explorar productos (búsqueda, filtros, paginación), registrarse / iniciar
 sesión, usar un carrito y confirmar pedidos. Usa arquitectura modular, endpoints RESTful,
@@ -95,7 +95,7 @@ docker ps                     # ver si corre
 
 ```bash
 docker start naturapp-mongo    # MongoDB corriendo
-cd naturapp-backend
+cd backend
 npm install
 npm run seed                   # (la primera vez) categorías + productos + usuarios demo
 npm run dev                    # servidor en http://localhost:9090
@@ -121,7 +121,7 @@ Verifica en `http://localhost:9090/api/health` → `{ "status": "ok", ... }`.
 
 El celular no puede usar `localhost` para llegar a tu PC. Obtén tu IP local (`ipconfig` en
 Windows, `ip addr` en Linux/macOS) y edítala en
-`naturapp-mobile/src/services/apiService.js`:
+`mobile-client/src/services/apiService.js`:
 
 ```js
 const BASE_URL = 'http://192.168.18.175:9090/api';  // ← pon TU IP
@@ -130,7 +130,7 @@ const BASE_URL = 'http://192.168.18.175:9090/api';  // ← pon TU IP
 ### Arrancar
 
 ```bash
-cd naturapp-mobile
+cd mobile-client
 npm install
 npx expo start                 # muestra el QR
 ```
@@ -171,13 +171,13 @@ Escanea el QR con **Expo Go** (Android) o la cámara (iOS).
 
 ```
 NaturApp/
-├── naturapp-backend/            # Express + MongoDB
+├── backend/            # Express + MongoDB
 │   ├── server.js                # entrada (conexión Mongo, CORS, rutas)
 │   ├── seed.js                  # datos de ejemplo
 │   ├── models/                  # Category, Product, User, Order
 │   ├── routes/                  # product/category/user/order/cart Routes
 │   └── middleware/auth.js       # JWT: authenticate / authorize
-└── naturapp-mobile/             # React Native + Expo Router
+└── mobile-client/             # React Native + Expo Router
     ├── app/                     # rutas (file-based)
     │   ├── (tabs)/              # home, search, cart, orders, profile + _layout (badge)
     │   ├── product/[id].js      # detalle
@@ -196,7 +196,7 @@ NaturApp/
 ## 8. Flujo para probar
 
 1. `docker start naturapp-mongo`.
-2. Backend: `cd naturapp-backend` → `npm run seed` (primera vez) → `npm run dev`.
+2. Backend: `cd backend` → `npm run seed` (primera vez) → `npm run dev`.
 3. Móvil: edita `BASE_URL` con tu IP → `npm install` → `npx expo start` → abre en Expo Go.
 4. **Perfil → Iniciar Sesión** con `cliente@naturapp.com / cliente123`.
 5. Explora **Inicio**, agrega al **Carrito** (sube el badge), ve a **Pago** y confirma un
